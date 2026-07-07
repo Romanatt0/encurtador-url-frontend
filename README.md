@@ -1,78 +1,98 @@
-# BlueLink Frontend (React + Vite)
+# BlueLink Frontend
 
-Projeto didatico para aprender React construindo a interface de um encurtador de URLs.
-O foco esta no frontend, com integracao direta com a sua API FastAPI.
+Frontend em React + Vite para um encurtador de URLs com autenticacao, tela de login, tela de cadastro e area protegida para gerar links curtos e QR Code.
+
+## Funcionalidades
+
+- Login com chamada para a API
+- Cadastro com validacao basica no frontend
+- Rota protegida para a tela principal
+- Encurtamento de URLs via API
+- Exibicao do QR Code da URL encurtada
+- Copia da URL curta para a area de transferencia
+
+## Tecnologias
+
+- React
+- Vite
+- React Router
 
 ## Como rodar
 
+1. Instale as dependencias:
+
 ```bash
 npm install
+```
+
+2. Configure a variavel de ambiente em um arquivo `.env`:
+
+```env
+VITE_API_URL=http://127.0.0.1:8000
+```
+
+3. Inicie o servidor de desenvolvimento:
+
+```bash
 npm run dev
 ```
 
-## Estrutura do projeto (o que cada arquivo faz)
+4. Para gerar a build de producao:
 
-### Raiz do projeto
+```bash
+npm run build
+```
 
-- `index.html`
-  - HTML base carregado pelo Vite.
-  - Contem a `div#root` onde o React monta o app.
-
-- `package.json`
-  - Lista dependencias e scripts (dev, build, preview).
-  - Use `npm run dev` para rodar em modo desenvolvimento.
-
-- `vite.config.js`
-  - Configuracoes do Vite (build, plugins).
-  - Aqui fica o plugin do React.
-
-- `README.md`
-  - Este guia didatico.
-
-### Pasta `src/`
+## Estrutura
 
 - `src/main.jsx`
-  - Entrada do React.
-  - Cria a raiz com `createRoot` e renderiza o `App`.
-  - Importa `index.css` com estilos globais.
+  Inicializa o React e o `BrowserRouter`.
 
 - `src/App.jsx`
-  - Componente principal da interface.
-  - Contem o formulario, o card de resultado e o layout geral.
-  - Usa estados (`useState`) para controlar:
-    - `url`: o que o usuario digita.
-    - `result`: a URL encurtada + QR vindos da API.
-    - `status`: idle | loading | success | error.
-    - `error`: mensagens simples de validacao/erro.
-  - Define `BASE_URL` para apontar para sua API (hoje: `http://127.0.0.1:8000`).
+  Define as rotas `/login`, `/register` e `/`.
+  Tambem controla o token em estado React para o redirecionamento funcionar apos o login.
 
-- `src/App.css`
-  - Estilos do layout e componentes da tela.
-  - Define a identidade visual corporativa (azul escuro), cards e form.
-  - Responsivo para mobile (quebra do grid e do formulario).
+- `src/routes/ProtectedRoute.jsx`
+  Bloqueia acesso a rotas privadas quando o usuario nao esta autenticado.
+
+- `src/pages/LoginPage.jsx`
+  Tela de login integrada com a API.
+
+- `src/pages/RegisterPage.jsx`
+  Tela de cadastro com validacao basica e retorno para o login.
+
+- `src/pages/HomePage.jsx`
+  Tela principal protegida do encurtador.
+
+- `src/styles/App.css`
+  Estilos da tela principal.
+
+- `src/styles/login.css`
+  Estilos isolados da tela de login.
+
+- `src/styles/register.css`
+  Estilos isolados da tela de cadastro.
 
 - `src/index.css`
-  - Estilos globais e variaveis de tema (`:root`).
-  - Define tipografias, cores, fundo e configuracoes basicas.
-  - Importa fontes do Google Fonts.
+  Variaveis globais, tema e reset basico.
 
-- `src/assets/`
-  - Pasta reservada para imagens e icones locais.
-  - No momento nao e usada pelo layout atual, mas pode ser reaproveitada.
+## Fluxo de autenticacao
 
-## Como funciona o fluxo do encurtador
+1. O usuario acessa `/login`.
+2. Ao enviar o formulario, o frontend chama `POST /user/login`.
+3. Se a API retornar `access_token`, o token e salvo no `localStorage` e no estado do React.
+4. O usuario e redirecionado para `/`.
+5. A rota `/` passa por `ProtectedRoute` e libera a `HomePage` apenas quando existe autenticacao.
 
-1) Usuario digita a URL no input.
-2) Ao enviar, o `handleSubmit` chama `shortenUrl`.
-3) A API retorna `{ url, short_url }`.
-4) O app extrai o `short_id` e monta `BASE_URL/{short_id}/qrcode`.
-5) O resultado aparece no card (URL curta + QR + URL original).
-5) O botao **Copiar** usa `navigator.clipboard` para copiar a URL curta.
+## Fluxo do encurtador
 
-## Onde ajustar a API
+1. O usuario informa uma URL na `HomePage`.
+2. O frontend chama `POST /short`.
+3. A resposta retorna a URL original e a URL curta.
+4. O app extrai o identificador da URL curta e monta a URL do QR Code.
+5. O resultado e exibido na interface.
 
-No `src/App.jsx`, altere apenas o `BASE_URL` caso a sua API mude de endereco.
+## Observacoes
 
-```js
-const BASE_URL = 'http://127.0.0.1:8000'
-```
+- O cadastro atual esta pronto no frontend, mas ainda nao envia dados para uma API.
+- O login depende de `VITE_API_URL` estar configurado corretamente.

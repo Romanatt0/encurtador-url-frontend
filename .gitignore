@@ -43,3 +43,6 @@ Thumbs.db
 
 # Test coverage
 coverage/
+
+# Local notes for coding agents
+AGENT.md
