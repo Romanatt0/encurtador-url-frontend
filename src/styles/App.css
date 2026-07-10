@@ -7,6 +7,100 @@
   z-index: 1;
 }
 
+.sidebar-trigger {
+  display: flex;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 17, 38, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 20;
+}
+
+.sidebar-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.sidebar-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: min(320px, 82vw);
+  height: 100vh;
+  padding: 24px 20px;
+  background: linear-gradient(180deg, #071a3b, #0f3f8f);
+  box-shadow: 0 24px 60px -24px rgba(4, 16, 41, 0.8);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar-panel.is-open {
+  transform: translateX(0);
+}
+
+.sidebar-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sidebar-panel-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.sidebar-close-button {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-close-button:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-link {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateX(4px);
+}
+
 .topbar {
   display: flex;
   align-items: center;
@@ -247,6 +341,21 @@
   font-size: 12px;
 }
 
+.menu-button {
+  border: none;
+  background: var(--surface-alt);
+  color: var(--text-h);
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -18px rgba(8, 21, 50, 0.6);
+}
 .original-url {
   margin: 0;
   color: var(--text);
@@ -295,6 +404,10 @@
   .app {
     padding: 24px;
     gap: 24px;
+  }
+
+  .sidebar-panel {
+    width: min(280px, 88vw);
   }
 
   .hero {

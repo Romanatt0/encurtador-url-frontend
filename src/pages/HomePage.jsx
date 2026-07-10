@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import '../styles/App.css'
+import { FiMenu } from "react-icons/fi";
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -38,6 +39,9 @@ function App() {
   const [result, setResult] = useState(null)
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -76,13 +80,56 @@ function App() {
     await navigator.clipboard.writeText(result.shortUrl)
   }
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen((currentValue) => !currentValue)
+  }
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false)
+  }
+
   return (
     <div className="app">
+
+      <div
+        className={`sidebar-overlay${isSidebarOpen ? ' is-open' : ''}`}
+        onClick={closeSidebar}
+        aria-hidden={!isSidebarOpen}
+      ></div>
+
+      <aside className={`sidebar-panel${isSidebarOpen ? ' is-open' : ''}`}>
+        <div className="sidebar-panel-header">
+          <p className="sidebar-panel-title">Menu</p>
+          <button className="sidebar-close-button" type="button" onClick={closeSidebar} aria-label="Fechar menu lateral">
+            x
+          </button>
+        </div>
+
+        <nav className="sidebar-nav" aria-label="Navegacao lateral">
+          <button className="sidebar-link" type="button" onClick={closeSidebar}>
+            Encurtar link
+          </button>
+          <button className="sidebar-link" type="button" onClick={closeSidebar}>
+            Historico
+          </button>
+          <button className="sidebar-link" type="button" onClick={closeSidebar}>
+            Configuracoes
+          </button>
+        </nav>
+      </aside>
+
+      <div className="sidebar-trigger">
+        <button className="menu-button" type="button" onClick={toggleSidebar} aria-label="Abrir menu lateral" aria-expanded={isSidebarOpen}>
+          <FiMenu />
+        </button>
+      </div>
       <header className="topbar">
         <div className="brand">
           <span className="brand-mark" aria-hidden="true"></span>
           BlueLink
         </div>
+
+
       </header>
 
       <main className="hero">
