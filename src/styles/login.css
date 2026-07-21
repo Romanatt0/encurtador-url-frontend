@@ -107,3 +107,9 @@
     gap: 24px;
   }
 }
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espaço entre o ícone e o texto */
+}

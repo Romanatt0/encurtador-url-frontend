@@ -39,7 +39,7 @@ function LoginPage({ onLogin }) {
 
     try {
       const data = await login(email, password)
-      onLogin(data.access_token)
+      onLogin(data.access_token, data.refresh_token, data.user)
       navigate('/')
     } catch (error) {
       setError('Erro ao realizar login. Verifique suas credenciais.')

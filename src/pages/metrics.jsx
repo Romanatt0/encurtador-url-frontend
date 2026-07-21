@@ -34,13 +34,15 @@ const shortenUrl = async (url) => {
 }
 
 
-function App({ onLogout, user }) {
+function App() {
   const [url, setUrl] = useState('')
   const [result, setResult] = useState(null)
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const navigate = useNavigate()
+
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   
 
@@ -113,22 +115,12 @@ function App({ onLogout, user }) {
           <button className="sidebar-link" type="button" onClick={closeSidebar}>
             <FiCreditCard /> Planos
           </button>
-          {user ? (
-            <>
-              <button className="sidebar-link" type="button" onClick={closeSidebar}>
-                <FiUser />
-                {user.name || user.email}
-              </button>
-              <button className="sidebar-link" type="button" onClick={onLogout}>
-                Sair
-              </button>
-            </>
-          ) : (
-            <button className="sidebar-link" type="button" onClick={() => navigate('/login')}>
+          <button className="sidebar-link" type="button" onClick={() => navigate('/login')}>
+            <li>
               <FiUser />
-              Login/Cadastrar
-            </button>
-          )}
+              {token ? "Home" : "Login/Cadastrar"}
+            </li>
+          </button>
         </nav>
       </aside>
 
