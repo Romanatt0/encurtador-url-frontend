@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import '../styles/App.css'
 import { FiMenu, FiUser, FiTrendingUp, FiCreditCard } from "react-icons/fi";
+import { SiLangchain } from "react-icons/si";
 import { useNavigate } from 'react-router-dom'
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -34,15 +35,23 @@ const shortenUrl = async (url) => {
 }
 
 
-function App({ onLogout, user }) {
+function App({ onLogout}) {
   const [url, setUrl] = useState('')
+  const [user, setUser] = useState(null)
   const [result, setResult] = useState(null)
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const navigate = useNavigate()
 
-  
+  useEffect(() => {
+    const userData = sessionStorage.getItem("user")
+    if (userData) {
+
+      let user = JSON.parse(userData)
+      setUser(user)
+    }
+  }, [])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -109,6 +118,9 @@ function App({ onLogout, user }) {
         <nav className="sidebar-nav" aria-label="Navegacao lateral">
           <button className="sidebar-link" type="button" onClick={closeSidebar}>
             <FiTrendingUp /> Métricas
+          </button>
+          <button className="sidebar-link" type="button" onClick={closeSidebar}>
+            <SiLangchain /> URLs
           </button>
           <button className="sidebar-link" type="button" onClick={closeSidebar}>
             <FiCreditCard /> Planos

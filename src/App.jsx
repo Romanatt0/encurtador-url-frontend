@@ -25,6 +25,7 @@ function App() {
 
     setAccessToken(accessToken)
     setUser(user)
+    sessionStorage.setItem("user", JSON.stringify(user))
   }
 
   const handleLogout = () => {
@@ -32,6 +33,7 @@ function App() {
     localStorage.removeItem("refresh_token")
     setAccessToken(null)
     setUser(null)
+    sessionStorage.removeItem("user")
   }
 
   // Renova o access token
@@ -84,6 +86,7 @@ function App() {
 
           setAccessToken(token)
           setUser(userData)
+          sessionStorage.setItem("user", JSON.stringify(userData))
 
           return
         }
@@ -108,6 +111,7 @@ function App() {
         const userData = await userVerification(token)
 
         setUser(userData)
+        sessionStorage.setItem("user", JSON.stringify(userData))
 
       } catch (error) {
 
@@ -158,7 +162,7 @@ function App() {
 
       <Route
         path="/"
-        element={<HomePage onLogout={handleLogout} user={user} />}
+        element={<HomePage onLogout={handleLogout} />}
       />
 
     </Routes>
