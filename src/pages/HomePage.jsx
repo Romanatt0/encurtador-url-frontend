@@ -46,10 +46,8 @@ function App({ onLogout}) {
 
   useEffect(() => {
     const userData = sessionStorage.getItem("user")
-    if (userData) {
-
-      let user = JSON.parse(userData)
-      setUser(user)
+    if (userData && userData !== "undefined") {
+      setUser(JSON.parse(userData))
     }
   }, [])
 
@@ -119,7 +117,7 @@ function App({ onLogout}) {
           <button className="sidebar-link" type="button" onClick={closeSidebar}>
             <FiTrendingUp /> Métricas
           </button>
-          <button className="sidebar-link" type="button" onClick={closeSidebar}>
+          <button className="sidebar-link" type="button" onClick={() => { closeSidebar(); navigate('/links') }}>
             <SiLangchain /> URLs
           </button>
           <button className="sidebar-link" type="button" onClick={closeSidebar}>

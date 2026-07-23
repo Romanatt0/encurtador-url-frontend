@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
 import RegisterPage from './pages/RegisterPage'
+import LinksPage from './pages/LinksPage'
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -163,6 +164,15 @@ function App() {
       <Route
         path="/"
         element={<HomePage onLogout={handleLogout} />}
+      />
+
+      <Route
+        path="/links"
+        element={
+          isAuthenticated
+            ? <LinksPage onLogout={handleLogout} />
+            : <Navigate to="/login" replace />
+        }
       />
 
     </Routes>
