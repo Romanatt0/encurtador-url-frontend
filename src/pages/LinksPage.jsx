@@ -191,7 +191,7 @@ function LinksPage({ onLogout }) {
                   <div className="links-card-top">
                     <div className="links-card-main">
                       <div className="links-short-code">
-                        <span className="links-code">{shortCode}</span>
+                        <span className="links-code">{link.short_url}</span>
                         <button
                           className="links-copy-btn"
                           type="button"
