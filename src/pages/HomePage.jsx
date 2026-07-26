@@ -17,15 +17,31 @@ const getShortId = (shortUrl) => {
 }
 
 const shortenUrl = async (url) => {
-  const response = await fetch(`${BASE_URL}/short`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      url: url,
-    }),
-  })
+  const userData = sessionStorage.getItem("user")
+  let response
+
+  if (userData !== "undefined") {
+
+    alert('Usuário não autenticado. Por favor, faça login para encurtar URLs.')
+    response = await fetch(`${BASE_URL}/short`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url }),
+    })
+  } else {
+    alert('Usuário autenticado. Encurtando URL com token de acesso.')
+    const token = localStorage.getItem("access_token")
+    response = await fetch(`${BASE_URL}/short`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ url }),
+    })
+  }
 
   if (!response.ok) {
     throw new Error('Erro ao encurtar URL')

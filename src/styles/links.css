@@ -138,6 +138,23 @@
   letter-spacing: 2px;
 }
 
+.links-delete-btn {
+  border: none;
+  background: var(--surface-alt);
+  color: var(--text-h);
+  padding: 10px 12px;
+  margin-left: 8px;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.links-delete-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -18px rgba(8, 21, 50, 0.6);
+}
+
 .links-menu-button {
   border: none;
   background: var(--surface-alt);
@@ -150,6 +167,23 @@
 }
 
 .links-menu-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -18px rgba(8, 21, 50, 0.6);
+}
+
+.links-refresh-btn {
+  border: none;
+  background: var(--surface-alt);
+  color: var(--text-h);
+  padding: 10px 12px;
+  margin-left: 8px;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.links-refresh-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 12px 24px -18px rgba(8, 21, 50, 0.6);
 }
@@ -358,6 +392,7 @@
   color: var(--muted);
   background: var(--surface-alt);
 }
+
 
 @media (max-width: 960px) {
   .links-app {

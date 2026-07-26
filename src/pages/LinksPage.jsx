@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/links.css'
 import { FiMenu, FiUser, FiTrendingUp, FiCreditCard, FiCopy, FiExternalLink, FiCalendar } from "react-icons/fi";
 import { SiLangchain } from "react-icons/si";
+import { IoMdRefresh } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -62,6 +64,65 @@ function LinksPage({ onLogout }) {
     setTimeout(() => setCopiedIndex(null), 2000)
   }
 
+  const handleRefresh = async (linkId, index) => {
+    if (linkId == null || linkId == undefined) {
+      alert('ID do link não encontrado.')
+      return
+    }
+
+    const token = localStorage.getItem("access_token")
+    if (!token) {
+      navigate('/login', { replace: true })
+      return
+    }
+
+    try {
+      const response = await fetch(`${BASE_URL}/refresh/${linkId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      if (!response.ok) {
+        throw new Error('Erro ao renovar link')
+      }
+    } catch (err) {
+      alert(err.message || 'Não foi possível renovar o link.')
+    } finally {
+      fetchLinks()
+    }
+  }
+
+  const handleDelete = async (linkId) => {
+    if (linkId == null || linkId == undefined) {
+      alert('ID do link não encontrado.')
+      return
+    }
+    if (!window.confirm('Tem certeza que deseja excluir este link?')) return
+
+    const token = localStorage.getItem("access_token")
+    if (!token) {
+      navigate('/login', { replace: true })
+      return
+    }
+
+    try {
+      const response = await fetch(`${BASE_URL}/delete/${linkId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      if (!response.ok) {
+        throw new Error('Erro ao excluir link')
+      }
+    } catch (err) {
+      alert(err.message || 'Não foi possível excluir o link.')
+    } finally {
+      fetchLinks()
+    }
+  }
+  
   const toggleSidebar = () => {
     setIsSidebarOpen((currentValue) => !currentValue)
   }
@@ -224,6 +285,18 @@ function LinksPage({ onLogout }) {
                           Sem expiração
                         </span>
                       )}
+
+                      <button className = "links-refresh-btn" type='button'
+                      onClick={() => handleRefresh(link.short_url.split('/').pop(), index)}><IoMdRefresh /></button>
+
+                      <button
+                        className="links-delete-btn"
+                        type="button"
+                        onClick={() => handleDelete(link.short_url.split('/').pop())}
+                        title="Excluir link"
+                      >
+                        <MdDelete />
+                      </button>
                     </div>
                   </div>
                 </div>
