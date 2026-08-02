@@ -164,14 +164,17 @@ function LinksPage({ onLogout }) {
 
         <nav className="links-sidebar-nav" aria-label="Navegacao lateral">
           <button className="links-sidebar-link" type="button" onClick={() => { closeSidebar(); navigate('/') }}>
-            <FiTrendingUp /> Início
+            <FiTrendingUp /> Home
           </button>
           <button className="links-sidebar-link" type="button" onClick={() => { closeSidebar(); navigate('/links') }}>
             <SiLangchain /> URLs
           </button>
-          <button className="links-sidebar-link" type="button" onClick={closeSidebar}>
+          <button className="links-sidebar-link" type="button" onClick={() => { closeSidebar(); navigate('/coming-soon') }}>
             <FiCreditCard /> Planos
           </button>
+          <button className="links-sidebar-link" type="button" onClick={() => { closeSidebar(); navigate('/coming-soon') }}>
+            <FiCreditCard /> Métricas
+          </button>          
           {user ? (
             <>
               <button className="links-sidebar-link" type="button" onClick={closeSidebar}>

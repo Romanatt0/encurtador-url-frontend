@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage'
 import HomePage from './pages/HomePage'
 import RegisterPage from './pages/RegisterPage'
 import LinksPage from './pages/LinksPage'
+import ComingSoonPage from './pages/ComingSoonPage'
 
 const BASE_URL = import.meta.env.VITE_API_URL
 
@@ -20,11 +21,16 @@ function App() {
   const isAuthenticated = user !== null
 
   // Login realizado com sucesso
-  const handleLogin = (accessToken, refreshToken, user) => {
+  const handleLogin = async (accessToken, refreshToken, user) => {
     localStorage.setItem("access_token", accessToken)
     localStorage.setItem("refresh_token", refreshToken)
 
     setAccessToken(accessToken)
+
+    if (!user) {
+      user = await userVerification(accessToken)
+    }
+
     setUser(user)
     sessionStorage.setItem("user", JSON.stringify(user))
   }
@@ -163,7 +169,8 @@ function App() {
 
       <Route
         path="/"
-        element={<HomePage onLogout={handleLogout} />}
+        element={<HomePage onLogout={handleLogout} user={user}
+      setUser={setUser}/>}
       />
 
       <Route
@@ -173,6 +180,12 @@ function App() {
             ? <LinksPage onLogout={handleLogout} />
             : <Navigate to="/login" replace />
         }
+      />
+
+      <Route
+        path="/coming-soon"
+        element={<ComingSoonPage onLogout={handleLogout} user={user}
+      setUser={setUser}/>}
       />
 
     </Routes>
