@@ -1,4 +1,4 @@
-.login-page {
+.app {
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -7,12 +7,12 @@
   z-index: 1;
 }
 
-.login-topbar {
+.topbar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
-
-
 
 .login-brand {
   font-family: var(--heading);
@@ -27,7 +27,7 @@
   padding-top: 16px;
 }
 
-.login-brand-mark {
+.brand-mark {
   width: 12px;
   height: 12px;
   border-radius: 4px;

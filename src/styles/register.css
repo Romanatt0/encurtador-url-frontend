@@ -1,3 +1,13 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px 48px 48px;
+  position: relative;
+  z-index: 1;
+}
+
+
 .register-page {
   display: flex;
   flex-direction: column;
@@ -112,6 +122,17 @@
   font-size: 14px;
 }
 
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 17, 38, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 20;
+}
 @media (max-width: 960px) {
   .register-page {
     padding: 24px;

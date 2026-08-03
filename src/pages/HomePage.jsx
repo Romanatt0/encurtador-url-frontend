@@ -51,21 +51,15 @@ const shortenUrl = async (url) => {
 }
 
 
-function App({ onLogout}) {
+function App({ onLogout, user, setUser }) {
   const [url, setUrl] = useState('')
-  const [user, setUser] = useState(null)
   const [result, setResult] = useState(null)
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const userData = sessionStorage.getItem("user")
-    if (userData && userData !== "undefined") {
-      setUser(JSON.parse(userData))
-    }
-  }, [])
+
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -130,14 +124,14 @@ function App({ onLogout}) {
         </div>
 
         <nav className="sidebar-nav" aria-label="Navegacao lateral">
-          <button className="sidebar-link" type="button" onClick={closeSidebar}>
-            <FiTrendingUp /> Métricas
-          </button>
           <button className="sidebar-link" type="button" onClick={() => { closeSidebar(); navigate('/links') }}>
             <SiLangchain /> URLs
           </button>
-          <button className="sidebar-link" type="button" onClick={closeSidebar}>
+          <button className="sidebar-link" type="button" onClick={() => { closeSidebar(); navigate('/coming-soon') }}>
             <FiCreditCard /> Planos
+          </button>
+          <button className="sidebar-link" type="button" onClick={() => { closeSidebar(); navigate('/coming-soon') }}>
+            <FiTrendingUp /> Métricas
           </button>
           {user ? (
             <>
