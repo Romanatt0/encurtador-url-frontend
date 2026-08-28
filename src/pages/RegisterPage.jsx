@@ -4,6 +4,8 @@ import '../styles/register.css'
 import { FiMenu, FiUser, FiTrendingUp, FiCreditCard } from "react-icons/fi";
 import { SiLangchain } from "react-icons/si";
 
+const BASE_URL = import.meta.env.VITE_API_URL
+
 function RegisterPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -13,7 +15,27 @@ function RegisterPage() {
   const navigate = useNavigate()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
-  const handleSubmit = (event) => {
+
+    const register = async (username, email, password) => {
+    const response = await fetch(`${BASE_URL}/user/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: username,
+        email: email,
+        password: password,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error('Erro ao criar conta')
+    }
+
+    return await response.json()
+  }
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     if (!name.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
@@ -26,8 +48,13 @@ function RegisterPage() {
       return
     }
 
-    setError('')
-    navigate('/login')
+    try {
+      await register(name, email, password)
+      setError('')
+      navigate('/login')
+    } catch (error) {
+      setError('Erro ao criar conta. Tente novamente.')
+    }
   }
 
     const toggleSidebar = () => {
