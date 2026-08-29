@@ -430,3 +430,37 @@
     align-items: flex-start;
   }
 }
+
+@media (max-width: 640px) {
+  .app {
+    padding: 20px 16px;
+    gap: 20px;
+  }
+
+  .intro h1 {
+    font-size: 28px;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+
+  .result-card {
+    padding: 16px;
+  }
+
+  .qr-area img,
+  .qr-placeholder {
+    width: 200px;
+    height: 200px;
+  }
+
+  .short-url {
+    flex-wrap: wrap;
+  }
+
+  .short-url span {
+    min-width: 0;
+    word-break: break-all;
+  }
+}

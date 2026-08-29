@@ -289,17 +289,19 @@ function LinksPage({ onLogout }) {
                         </span>
                       )}
 
-                      <button className = "links-refresh-btn" type='button'
-                      onClick={() => handleRefresh(link.short_url.split('/').pop(), index)}><IoMdRefresh /></button>
+                      <div className="links-card-actions">
+                        <button className = "links-refresh-btn" type='button'
+                        onClick={() => handleRefresh(link.short_url.split('/').pop(), index)}><IoMdRefresh /></button>
 
-                      <button
-                        className="links-delete-btn"
-                        type="button"
-                        onClick={() => handleDelete(link.short_url.split('/').pop())}
-                        title="Excluir link"
-                      >
-                        <MdDelete />
-                      </button>
+                        <button
+                          className="links-delete-btn"
+                          type="button"
+                          onClick={() => handleDelete(link.short_url.split('/').pop())}
+                          title="Excluir link"
+                        >
+                          <MdDelete />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

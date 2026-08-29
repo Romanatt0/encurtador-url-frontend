@@ -102,9 +102,24 @@
   font-size: 14px;
 }
 @media (max-width: 960px) {
-  .login-page {
+  .app {
     padding: 24px;
     gap: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 20px 16px;
+  }
+
+  .login-brand {
+    font-size: 26px;
+    padding-left: 8px;
+  }
+
+  .login-form {
+    padding: 16px;
   }
 }
 

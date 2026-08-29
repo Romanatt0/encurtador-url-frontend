@@ -415,10 +415,50 @@
 
   .links-card-meta {
     width: 100%;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .links-card-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .links-card-actions .links-refresh-btn,
+  .links-card-actions .links-delete-btn {
+    flex: 1;
+    margin-left: 0;
   }
 
   .links-expiration {
     width: 100%;
     justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .links-app {
+    padding: 16px;
+    gap: 20px;
+  }
+
+  .links-header h1 {
+    font-size: 24px;
+  }
+
+  .links-brand-tag {
+    display: none;
+  }
+
+  .links-short-code {
+    width: 100%;
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  .links-code {
+    word-break: break-all;
+    overflow-wrap: anywhere;
   }
 }
