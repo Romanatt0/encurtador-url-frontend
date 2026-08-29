@@ -20,24 +20,21 @@ const shortenUrl = async (url) => {
   const userData = sessionStorage.getItem("user")
   let response
 
-  if (userData !== "undefined") {
-
-    alert('Usuário não autenticado. Por favor, faça login para encurtar URLs.')
-    response = await fetch(`${BASE_URL}/short`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ url }),
-    })
-  } else {
-    alert('Usuário autenticado. Encurtando URL com token de acesso.')
+  if (userData) {
     const token = localStorage.getItem("access_token")
     response = await fetch(`${BASE_URL}/short`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ url }),
+    })
+  } else {
+    response = await fetch(`${BASE_URL}/short`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ url }),
     })
